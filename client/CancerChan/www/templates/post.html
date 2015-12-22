@@ -14,7 +14,7 @@
 	  <div class="item ">	   
 	    <h2 >{{post.titulo | capitalize }} <span ng-show="post.titulo">-</span> {{post.autor || "Anomimo" | capitalize}} 
 	    	<span class="item-note">
-      		{{post.fecha |  date:'medium' }} No. {{post.numero || 0}}
+      		{{post.fecha |  date:'medium' }} No. {{post.enumeracion || 0}}
    	    	</span>
    		</h2>
 	    

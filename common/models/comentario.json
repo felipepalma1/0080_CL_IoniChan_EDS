@@ -17,6 +17,9 @@
     "autor": {
       "type": "string"
     },
+    "enumeracion": {
+      "type": "number"
+    },
     "fecha": {
       "type": "date"
     }

@@ -44,9 +44,5 @@
   "tema": {
     "dataSource": "cancerchandb",
     "public": true
-  },
-  "enumeracion": {
-    "dataSource": "cancerchandb",
-    "public": true
   }
 }

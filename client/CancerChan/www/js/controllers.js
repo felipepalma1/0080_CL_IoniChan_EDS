@@ -76,7 +76,7 @@ $scope.toggleDescripcion= function(post) {
 
 })
 
-.controller('NewPostCtrl', function($scope, $stateParams, Tema, Post) {
+.controller('NewPostCtrl', function($scope, $stateParams, $ionicPopup,$timeout,$state,Tema, Post) {
   $scope.tema= [];
 
   Tema
@@ -92,13 +92,40 @@ $scope.toggleDescripcion= function(post) {
     Post
         .create(post)
         .$promise
-        .then(function(data) {
-          post.autor= "";
-          post.contenido= "";
-          post.titulo= "";
-         console.log(data);
-        })
-  };    
+        .then(
+          function(data) {
+          console.log(data);
+          $scope.mensaje="Su post se ha creado con éxito en "+$scope.tema.titulo;
+          $scope.showAlert();
+        },function(err) {
+          console.log(err);
+
+          $scope.mensaje="Error al crear el post.";
+          $scope.showAlert();
+       
+
+        });
+  };
+
+
+  $scope.showAlert = function() {
+   var alertPopup = $ionicPopup.alert({
+     title: 'Estado del post',
+     template: $scope.mensaje
+   });
+
+   alertPopup.then(function(res) {
+     $state.go("app.post", {id: $scope.tema.id});
+   });
+
+   $timeout(function() {
+          alertPopup.close(); //close the popup after 3 seconds for some reason
+       }, 3000);
+
+ };
+
+  
+
 })
 
 .controller('HomeCtrl', function($scope, $stateParams) {
