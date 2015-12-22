@@ -1,0 +1,37 @@
+<ion-view view-title=" /{{tema.siglas}}/ - {{tema.titulo}}">
+	<ion-nav-buttons side="left">
+		<button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+	</ion-nav-buttons>
+	<ion-nav-title>
+		<span>/{{tema.siglas}}/ - {{tema.titulo}} </span>
+	</ion-nav-title>	
+	
+  <ion-content>
+  	<form ng-submit="sendForm(post)">
+
+	 	<div class="list list-inset">
+
+	 	  <label class="item item-input">
+		    <input type="text" placeholder="Autor - Opcional" ng-model="post.autor">
+		  </label>
+
+		  <label class="item item-input">
+		    <input type="text" placeholder="Titulo - Opcional" ng-model="post.titulo">
+		  </label>
+
+		   <label class="item item-input">
+		    <textarea placeholder="Mensaje" ng-model="post.contenido"></textarea>
+		  </label>
+		 
+		</div>
+		<div class="padding">
+			<button class="button button-block button-assertive" ng-click="addMedia()">
+		      Agregar Foto
+		    </button>
+			<button class="button button-block button-dark " type="submit" ng-disabled="!post.contenido || post.contenido.length < 50">Crear Post</button>
+		</div>
+
+	</form>
+  </ion-content>
+</ion-view>
+

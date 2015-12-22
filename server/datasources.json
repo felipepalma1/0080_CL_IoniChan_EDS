@@ -1,0 +1,10 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "cancerchandb": {
+    "name": "cancerchandb",
+    "connector": "mongodb"
+  }
+}

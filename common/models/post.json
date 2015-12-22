@@ -1,0 +1,71 @@
+{
+  "name": "post",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "titulo": {
+      "type": {}
+    },
+    "contenido": {
+      "type": "string",
+      "required": true
+    },
+    "url_foto": {
+      "type": "string"
+    },
+    "autor": {
+      "type": "string"
+    },
+    "fecha": {
+      "type": "date"
+    },
+    "like": {
+      "type": "number"
+    },
+    "dislike": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "comentarios": {
+      "type": "hasMany",
+      "model": "comentario",
+      "foreignKey": ""
+    },
+    "tema": {
+      "type": "belongsTo",
+      "model": "tema",
+      "foreignKey": ""
+    },
+    "enumeracion": {
+      "type": "belongsTo",
+      "model": "enumeracion",
+      "foreignKey": ""
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": {}
+}

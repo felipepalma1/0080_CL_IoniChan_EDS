@@ -1,0 +1,56 @@
+<ion-view view-title=" /{{tema.siglas}}/ - {{tema.titulo}}">
+	<ion-nav-buttons side="left">
+		<button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+	</ion-nav-buttons>
+	<ion-nav-title>
+		<span>/{{tema.siglas}}/ - {{tema.titulo}} </span>
+	</ion-nav-title>	
+	<ion-nav-buttons side="right">
+		<button  class="button button-icon icon ion-plus-circled" ui-sref="app.new-post({id: tema.id})"></button>
+	</ion-nav-buttons>
+  <ion-content>
+  
+    <div class="list card" ng-repeat="post in posts">
+	  <div class="item ">	   
+	    <h2 >{{post.titulo | capitalize }} <span ng-show="post.titulo">-</span> {{post.autor || "Anomimo" | capitalize}} 
+	    	<span class="item-note">
+      		{{post.fecha |  date:'medium' }} No. {{post.numero || 0}}
+   	    	</span>
+   		</h2>
+	    
+	   
+	  </div>
+	  <div class="item  item-text-wrap " ng-class="{'item-thumbnail-left': post.url_foto  }" >	   
+	    <img  src="{{post.url_foto}}" ng-click="openModal()">
+	      <p ng-show="post.resumido" ng-click="toggleDescripcion(post)">{{post.contenido}} . </p> 
+	      <p ng-show="!post.resumido" ng-click="toggleDescripcion(post)">{{post.contenido| limitTo : 140}} {{  post.contenido.length > 140 ? '&hellip;' : '.'}}</p> 
+	  </div>
+	  
+	  <div class="item tabs tabs-secondary tabs-icon-left">
+	    <a class="tab-item" href="#">
+	      <i class="icon ion-thumbsup"></i>
+	      {{post.like || 0}} Like
+	    </a>
+	    <a class="tab-item" href="#">
+	      <i class="icon ion-thumbsdown"></i>
+	     {{post.dislike || 0}} Dislike
+	    </a>
+	    <a class="tab-item" href="#">
+	      <i class="icon ion-chatbox"></i>
+	      {{post.comentarios}} Comentarios
+	    </a>
+	  </div>
+	</div>
+
+
+	<script id="image-modal.html" type="text/ng-template">
+              <div class="modal image-modal transparent" ng-click="closeModal()">
+                  <ion-pane class="transparent">
+                     <img ng-src="{{imagePost}}" class="fullscreen-image"/>
+                  </ion-pane>
+              </div>
+    </script>
+  </ion-content>
+</ion-view>
+
+
