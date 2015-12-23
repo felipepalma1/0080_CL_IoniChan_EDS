@@ -1,4 +1,4 @@
-angular.module('cancerchan.filters', [])
+angular.module('ionichan.filters', [])
 
 .filter('capitalize', function() {
   return function(input, scope) {

@@ -1,4 +1,4 @@
-angular.module('cancerchan.controllers', [])
+angular.module('ionichan.controllers', [])
 
 .controller('AppCtrl', function($scope, Tema) {
   
