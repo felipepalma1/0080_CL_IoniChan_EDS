@@ -26,17 +26,18 @@
 		</div>
 		<div class="padding">
 			
-			<button class="button button-block button-assertive" ng-click="addMedia()">
+			<a class="button button-block button-assertive" >
 		      Agregar Foto
-		    </button>
+		    </a>
 			<button class="button button-block button-dark " type="submit" ng-disabled="!post.contenido || post.contenido.length < 25">Crear Post</button>
 		</div>
 	
 	</form>
-	<button class="button button-block button-assertive" ng-click="showAlert()">
-		     Alert
-		    </button>
-
+	<div class="card" ng-show="mensajeStado">
+	  <div class="item item-text-wrap">
+	    {{mensaje}}
+	  </div>
+	</div>
   </ion-content>
 </ion-view>
 

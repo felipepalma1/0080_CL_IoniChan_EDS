@@ -1,7 +1,7 @@
 angular.module('cancerchan.controllers', [])
 
 .controller('AppCtrl', function($scope, Tema) {
-
+  
   $scope.temas= [];
 
   Tema
@@ -19,9 +19,9 @@ angular.module('cancerchan.controllers', [])
 })
 
 .controller('PostCtrl',function($scope,$stateParams, Tema ,Post, $ionicModal) {
-
+$scope.noMasPost = false;
+//Extraemos los datos del tema
 $scope.tema= [];
-
 Tema
     .findById({id : $stateParams.id})
     .$promise
@@ -30,10 +30,10 @@ Tema
     });
 
 
+//Extraemos todos los post que se encuentren en el tema
 $scope.posts=[]
-
 Tema
-  .posts({id : $stateParams.id})
+  .posts({id : $stateParams.id, filter : { order : 'enumeracion DESC', limit: '10'}})
   .$promise
   .then(function(data) {
      $scope.posts=data;
@@ -48,7 +48,7 @@ Tema
   });
 
 
-
+//Permite abrir la foto del post
 $ionicModal.fromTemplateUrl('image-modal.html', {
   scope: $scope,
   animation: 'slide-in-up'
@@ -69,14 +69,116 @@ $scope.$on('$destroy', function() {
       $scope.modal.remove();
     });
 
-
+//Muestra el texto completo del post o lo esconde
 $scope.toggleDescripcion= function(post) {
   post.resumido=!post.resumido;
 };
 
+//Refresca la pagina y trae nuevos posts
+$scope.doRefresh=function() {
+
+  //Comprueba si el tema no tiene ningun post
+  if($scope.posts.length>0)
+     lastPost=$scope.posts[0].enumeracion;
+   else
+    return
+
+      
+  Tema
+  .posts({id : $stateParams.id, filter: 
+                                      { 
+                                        where: {
+                                              enumeracion: {gt: lastPost}
+                                               }
+                                      }
+                                    })
+  .$promise
+  .then(function(data) {
+    
+    if(data.length>0){
+
+     angular.forEach(data, function(value) {
+        Post
+          .comentarios.count({id : value.id} )
+          .$promise
+          .then(function(data) {
+            value.comentarios=(data.count);
+          });
+        $scope.posts.unshift(value);
+     })
+    
+    }
+  })
+  .finally(function() {
+     $scope.$broadcast('scroll.refreshComplete');
+  });
+};
+
+//trae post viejos
+$scope.postViejos = function() {
+ 
+  //Comprueba si el tema no tiene ningun post
+  if($scope.posts.length>0)
+    firstPost=$scope.posts[$scope.posts.length-1].enumeracion;
+       
+  else
+    return;
+  
+    
+
+  Tema
+  .posts({id : $stateParams.id, filter: 
+                                      { 
+                                        order : 'enumeracion DESC', limit: '10',
+                                        where: {
+                                              enumeracion: {lt: firstPost}
+                                               }
+                                      }
+                                    })
+  .$promise
+  .then(function(data) {
+    
+    if(data.length>0){
+
+     angular.forEach(data, function(value) {
+        Post
+          .comentarios.count({id : value.id} )
+          .$promise
+          .then(function(data) {
+            value.comentarios=(data.count);
+          });
+        $scope.posts.push(value);
+       
+     })
+      $scope.$broadcast('scroll.infiniteScrollComplete');
+
+    }
+
+    else{
+      $scope.noMasPost=true;
+    }
+
+
+   
+     
+    
+
+    
+  })
+
+  
+
+
+  };
+
+  $scope.$on('$stateChangeSuccess', function() {
+    $scope.postViejos();
+  });
+
+
 })
 
-.controller('NewPostCtrl', function($scope, $stateParams, $ionicPopup,$timeout,$state,Tema, Post) {
+.controller('NewPostCtrl', function($scope, $stateParams,$state,Tema, Post) {
   $scope.tema= [];
 
   Tema
@@ -95,34 +197,21 @@ $scope.toggleDescripcion= function(post) {
         .then(
           function(data) {
           console.log(data);
-          $scope.mensaje="Su post se ha creado con éxito en "+$scope.tema.titulo;
-          $scope.showAlert();
+          $scope.mensaje="Su post se ha creado con éxito";
+          post.autor="";
+          post.temaId="";
+          post.contenido="";
+          post.titulo="";
+          $scope.mensajeStado=true;
         },function(err) {
           console.log(err);
-
           $scope.mensaje="Error al crear el post.";
-          $scope.showAlert();
+          $scope.mensajeStado=true;
        
 
         });
   };
 
-
-  $scope.showAlert = function() {
-   var alertPopup = $ionicPopup.alert({
-     title: 'Estado del post',
-     template: $scope.mensaje
-   });
-
-   alertPopup.then(function(res) {
-     $state.go("app.post", {id: $scope.tema.id});
-   });
-
-   $timeout(function() {
-          alertPopup.close(); //close the popup after 3 seconds for some reason
-       }, 3000);
-
- };
 
   
 

@@ -9,19 +9,24 @@
 		<button  class="button button-icon icon ion-plus-circled" ui-sref="app.new-post({id: tema.id})"></button>
 	</ion-nav-buttons>
   <ion-content>
-  
-    <div class="list card" ng-repeat="post in posts">
+  	<ion-refresher
+	    pulling-text="Tire para actualizar.."
+	    on-refresh="doRefresh()">
+	</ion-refresher>	
+    <div  class=" list card" ng-repeat="post in posts">
 	  <div class="item ">	   
 	    <h2 >{{post.titulo | capitalize }} <span ng-show="post.titulo">-</span> {{post.autor || "Anomimo" | capitalize}} 
 	    	<span class="item-note">
-      		{{post.fecha |  date:'medium' }} No. {{post.enumeracion || 0}}
+	    	<span am-time-ago="post.fecha "></span>	
+      		<!--{{post.fecha |  date:'medium' }} -->
+      		| No. {{post.enumeracion || 0}}
    	    	</span>
    		</h2>
 	    
 	   
 	  </div>
 	  <div class="item  item-text-wrap " ng-class="{'item-thumbnail-left': post.url_foto  }" >	   
-	    <img  src="{{post.url_foto}}" ng-click="openModal()">
+	    <img  src="{{post.url_foto}}" ng-click="openModal()" >
 	      <p ng-show="post.resumido" ng-click="toggleDescripcion(post)">{{post.contenido}} . </p> 
 	      <p ng-show="!post.resumido" ng-click="toggleDescripcion(post)">{{post.contenido| limitTo : 140}} {{  post.contenido.length > 140 ? '&hellip;' : '.'}}</p> 
 	  </div>
@@ -41,12 +46,17 @@
 	    </a>
 	  </div>
 	</div>
-
+	<ion-infinite-scroll
+	    on-infinite="postViejos()"
+	    ng-if="!noMasPost"
+  		icon="ion-loading-c"
+	    distance="5%">
+	</ion-infinite-scroll>
 
 	<script id="image-modal.html" type="text/ng-template">
               <div class="modal image-modal transparent" ng-click="closeModal()">
                   <ion-pane class="transparent">
-                     <img ng-src="{{imagePost}}" class="fullscreen-image"/>
+                     <img ng-src="{{imagePost}}" class="fullscreen-image" ng-if="imagePost"/>
                   </ion-pane>
               </div>
     </script>
