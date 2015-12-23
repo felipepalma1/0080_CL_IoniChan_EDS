@@ -1,5 +1,5 @@
 {
-  "name": "Cancerchan",
+  "name": "Ionichan",
   "version": "1.0.0",
   "main": "server/server.js",
   "scripts": {
@@ -23,5 +23,5 @@
     "type": "",
     "url": ""
   },
-  "description": "Cancerchan"
+  "description": "Aplicacion basada de post y comentarios anonimos"
 }

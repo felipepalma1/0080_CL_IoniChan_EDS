@@ -14,35 +14,35 @@
     ]
   },
   "User": {
-    "dataSource": "cancerchandb",
+    "dataSource": "ionichandb",
     "public": false
   },
   "AccessToken": {
-    "dataSource": "cancerchandb",
+    "dataSource": "ionichandb",
     "public": false
   },
   "ACL": {
-    "dataSource": "cancerchandb",
+    "dataSource": "ionichandb",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "cancerchandb",
+    "dataSource": "ionichandb",
     "public": false
   },
   "Role": {
-    "dataSource": "cancerchandb",
+    "dataSource": "ionichandb",
     "public": false
   },
   "post": {
-    "dataSource": "cancerchandb",
+    "dataSource": "ionichandb",
     "public": true
   },
   "comentario": {
-    "dataSource": "cancerchandb",
+    "dataSource": "ionichandb",
     "public": true
   },
   "tema": {
-    "dataSource": "cancerchandb",
+    "dataSource": "ionichandb",
     "public": true
   }
 }

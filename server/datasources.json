@@ -3,8 +3,8 @@
     "name": "db",
     "connector": "memory"
   },
-  "cancerchandb": {
-    "name": "cancerchandb",
+  "ionichandb": {
+    "name": "ionichandb",
     "connector": "mongodb"
   }
 }
